@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jan 19, 2020 at 03:39 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Host: localhost:3306
+-- Generation Time: Jan 20, 2020 at 03:41 AM
+-- Server version: 8.0.18
+-- PHP Version: 7.3.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `surat`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `surat_keluar`
+--
+
+CREATE TABLE `surat_keluar` (
+  `id` int(12) NOT NULL,
+  `no_surat` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
+  `tanggal` date NOT NULL,
+  `tujuan` varchar(128) COLLATE utf8mb4_general_ci NOT NULL,
+  `perihal` text COLLATE utf8mb4_general_ci NOT NULL,
+  `lokasi` varchar(128) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `surat_keluar`
+--
+
+INSERT INTO `surat_keluar` (`id`, `no_surat`, `tanggal`, `tujuan`, `perihal`, `lokasi`) VALUES
+(1, '12345ab', '2020-01-01', 'STSN', 'Persiapan PSSN', 'RPLK'),
+(2, '12345gg', '2020-02-01', 'BSSN', 'Perubahan ke PSSN', 'RPLK');
 
 -- --------------------------------------------------------
 
@@ -138,7 +161,8 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `is_active
 (4, 3, 'Menu Management', 'menu', 'fas fa-fw fa-folder', 1),
 (5, 3, 'Submenu Management', 'menu/submenu', 'fas fa-fw fa-folder-open', 1),
 (7, 1, 'Role', 'admin/role', 'fas fa-fw fa-user-tie', 1),
-(8, 2, 'Change Password', 'user/changepassword', 'fas fa-fw fa-key', 1);
+(8, 2, 'Change Password', 'user/changepassword', 'fas fa-fw fa-key', 1),
+(12, 2, 'Surat Keluar', 'menu/suratkeluar', 'fas fa-fw fa-folder-open', 1);
 
 -- --------------------------------------------------------
 
@@ -164,6 +188,12 @@ INSERT INTO `user_token` (`id`, `email`, `token`, `date_created`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `surat_keluar`
+--
+ALTER TABLE `surat_keluar`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user`
@@ -206,6 +236,12 @@ ALTER TABLE `user_token`
 --
 
 --
+-- AUTO_INCREMENT for table `surat_keluar`
+--
+ALTER TABLE `surat_keluar`
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
@@ -233,7 +269,7 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_token`
