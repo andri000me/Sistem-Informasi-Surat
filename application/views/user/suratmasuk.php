@@ -16,7 +16,7 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newSubMenuModal">Tambahkan Surat Keluar</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newSubMenuModal">Tambahkan Surat Masuk</a>
 
             <table class="table table-hover">
                 <thead>
@@ -24,9 +24,11 @@
                         <th scope="col">#</th>
                         <th scope="col">Nomor Surat</th>
                         <th scope="col">Tanggal Surat</th>
-                        <th scope="col">Tujuan</th>
+                        <th scope="col">Tanggal Terima</th>
+                        <th scope="col">Asal</th>
+                        <th scope="col">Sifat</th>
                         <th scope="col">Perihal</th>
-                        <th scope="col">Lokasi Arsip</th>
+                        <th scope="col">Status Disposisi</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -36,10 +38,12 @@
                     <tr>
                         <th scope="row"><?= $i; ?></th>
                         <td><?= $sm['no_surat']; ?></td>
-                        <td><?= $sm['tanggal']; ?></td>
-                        <td><?= $sm['tujuan']; ?></td>
+                        <td><?= $sm['tgl_surat']; ?></td>
+                        <td><?= $sm['tgl_terima']; ?></td>
+                        <td><?= $sm['asal']; ?></td>
+                        <td><?= $sm['sifat']; ?></td>
                         <td><?= $sm['perihal']; ?></td>
-                        <td><?= $sm['lokasi']; ?></td>
+                        <td><?= $sm['disposisi']; ?></td>
                         <td>
                             <a href="" class="badge badge-success">edit</a>
                             <a href="" class="badge badge-danger">delete</a>
@@ -69,27 +73,33 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newSubMenuModalLabel">Tambah Daftar Surat Keluar</h5>
+                <h5 class="modal-title" id="newSubMenuModalLabel">Tambah Daftar Surat Masukr</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('menu/suratkeluar'); ?>" method="post">
+            <form action="<?= base_url('user/suratmasuk'); ?>" method="post">
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="text" class="form-control" id="no_surat" name="no_surat" placeholder="Nomor Surat">
                     </div>
                     <div class="form-group">
-                        <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal Surat">
+                        <input type="date" class="form-control" id="tgl_surat" name="tgl_surat" placeholder="Tanggal Surat">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="tujuan" name="tujuan" placeholder="Tujuan Pengiriman">
+                        <input type="date" class="form-control" id="tgl_terima" name="tgl_terima" placeholder="Tanggal Surat Diterima">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="asal" name="asal" placeholder="Asal Surat">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="sifat" name="sifat" placeholder="Sifat Surat">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="perihal" name="perihal" placeholder="Perihal">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Lokasi Arsip">
+                        <input type="text" class="form-control" id="disposisi" name="disposisi" placeholder="Disposisi">
                     </div>
                 </div>
                 <div class="modal-footer">

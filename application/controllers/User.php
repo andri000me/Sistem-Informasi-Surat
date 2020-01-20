@@ -21,6 +21,80 @@ class User extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function suratkeluar()
+    {
+        $data['title'] = 'Surat Keluar';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('Keluar_model', 'menu');
+
+        $data['subMenu'] = $this->menu->getSubMenu();
+        $data['menu'] = $this->db->get('surat_keluar')->result_array();
+
+        $this->form_validation->set_rules('no_surat', 'no_surat', 'required');
+        $this->form_validation->set_rules('tanggal', 'tanggal', 'required');
+        $this->form_validation->set_rules('tujuan', 'tujuan', 'required');
+        $this->form_validation->set_rules('perihal', 'perihal', 'required');
+        $this->form_validation->set_rules('lokasi', 'lokasi', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('user/suratkeluar', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'no_surat' => $this->input->post('no_surat'),
+                'tanggal' => $this->input->post('tanggal'),
+                'tujuan' => $this->input->post('tujuan'),
+                'perihal' => $this->input->post('perihal'),
+                'lokasi' => $this->input->post('lokasi')
+            ];
+            $this->db->insert('surat_keluar', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New menu added!</div>');
+            redirect('user/suratkeluar');
+        }
+    }
+
+
+    public function suratmasuk()
+    {
+        $data['title'] = 'Surat Masuk';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('Masuk_model', 'menu');
+
+        $data['subMenu'] = $this->menu->getSubMenu();
+        $data['menu'] = $this->db->get('surat_masuk')->result_array();
+
+        $this->form_validation->set_rules('no_surat', 'no_surat', 'required');
+        $this->form_validation->set_rules('tgl_surat', 'tgl_surat', 'required');
+        $this->form_validation->set_rules('tgl_terima', 'tgl_terima', 'required');
+        $this->form_validation->set_rules('asal', 'asal', 'required');
+        $this->form_validation->set_rules('sifat', 'sifat', 'required');
+        $this->form_validation->set_rules('perihal', 'perihal', 'required');
+        $this->form_validation->set_rules('disposisi', 'disposisi', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('user/suratmasuk', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'no_surat' => $this->input->post('no_surat'),
+                'tgl_surat' => $this->input->post('tgl_surat'),
+                'tgl_terima' => $this->input->post('tgl_terima'),
+                'asal' => $this->input->post('asal'),
+                'sifat' => $this->input->post('sifat'),
+                'perihal' => $this->input->post('perihal'),
+                'disposisi' => $this->input->post('disposisi')
+            ];
+            $this->db->insert('surat_masuk', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New menu added!</div>');
+            redirect('user/suratmasuk');
+        }
+    }
 
     public function edit()
     {
@@ -57,7 +131,8 @@ class User extends CI_Controller
                     $new_image = $this->upload->data('file_name');
                     $this->db->set('image', $new_image);
                 } else {
-                    echo $this->upload->dispay_errors();
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors() . '</div>');
+                    redirect('user');
                 }
             }
 

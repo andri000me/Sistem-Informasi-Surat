@@ -66,39 +66,5 @@ class Menu extends CI_Controller
         }
     }
 
-    public function suratkeluar()
-    {
-        $data['title'] = 'Surat Keluar';
-        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-        $this->load->model('Keluar_model', 'menu');
-
-        $data['subMenu'] = $this->menu->getSubMenu();
-        $data['menu'] = $this->db->get('surat_keluar')->result_array();
-
-        $this->form_validation->set_rules('no_surat', 'no_surat', 'required');
-        $this->form_validation->set_rules('tanggal', 'tanggal', 'required');
-        $this->form_validation->set_rules('tujuan', 'tujuan', 'required');
-        $this->form_validation->set_rules('perihal', 'perihal', 'required');
-        $this->form_validation->set_rules('lokasi', 'lokasi', 'required');
-
-        if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('menu/suratkeluar', $data);
-            $this->load->view('templates/footer');
-        } else {
-            $data = [
-                'no_surat' => $this->input->post('no_surat'),
-                'tanggal' => $this->input->post('tanggal'),
-                'tujuan' => $this->input->post('tujuan'),
-                'perihal' => $this->input->post('perihal'),
-                'lokasi' => $this->input->post('lokasi')
-            ];
-            $this->db->insert('surat_keluar', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New menu added!</div>');
-            redirect('menu/suratkeluar');
-        }
-    }
-
+ 
 }
