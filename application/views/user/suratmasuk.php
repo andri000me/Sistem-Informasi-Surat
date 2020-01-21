@@ -28,7 +28,6 @@
                         <th scope="col">Asal</th>
                         <th scope="col">Sifat</th>
                         <th scope="col">Perihal</th>
-                        <th scope="col">Status Disposisi</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -43,10 +42,11 @@
                         <td><?= $sm['asal']; ?></td>
                         <td><?= $sm['sifat']; ?></td>
                         <td><?= $sm['perihal']; ?></td>
-                        <td><?= $sm['disposisi']; ?></td>
+
                         <td>
                             <a href="" class="badge badge-success">edit</a>
                             <a href="" class="badge badge-danger">delete</a>
+                            <a href="/user/disposisi.php" class="badge badge-dark">disposisi</a>
                         </td>
                     </tr>
                     <?php $i++; ?>

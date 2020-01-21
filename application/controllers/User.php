@@ -72,7 +72,6 @@ class User extends CI_Controller
         $this->form_validation->set_rules('asal', 'asal', 'required');
         $this->form_validation->set_rules('sifat', 'sifat', 'required');
         $this->form_validation->set_rules('perihal', 'perihal', 'required');
-        $this->form_validation->set_rules('disposisi', 'disposisi', 'required');
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
@@ -88,7 +87,6 @@ class User extends CI_Controller
                 'asal' => $this->input->post('asal'),
                 'sifat' => $this->input->post('sifat'),
                 'perihal' => $this->input->post('perihal'),
-                'disposisi' => $this->input->post('disposisi')
             ];
             $this->db->insert('surat_masuk', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New menu added!</div>');
