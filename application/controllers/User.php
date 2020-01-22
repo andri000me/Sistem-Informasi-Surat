@@ -143,6 +143,47 @@ class User extends CI_Controller
         }
     }
 
+    public function disposisi()
+    {
+            $data['title'] = 'Disposisi';
+            $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+            $this->load->model('Disposisi_model', 'menu');
+    
+            $data['subMenu'] = $this->menu->getSubMenu();
+            $data['menu'] = $this->db->get('disposisi')->result_array();
+    
+            $this->form_validation->set_rules('surat_dari', 'surat_dari', 'required');
+            $this->form_validation->set_rules('no_surat', 'no_surat', 'required');
+            $this->form_validation->set_rules('tgl_surat', 'tgl_surat', 'required');
+            $this->form_validation->set_rules('tgl_terima', 'tgl_terima', 'required');
+            $this->form_validation->set_rules('sifat', 'sifat', 'required');
+            $this->form_validation->set_rules('asal', 'asal', 'required');
+            $this->form_validation->set_rules('perihal', 'perihal', 'required');
+            $this->form_validation->set_rules('teruskan', 'teruskan', 'required');
+    
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/header', $data);
+                $this->load->view('templates/sidebar', $data);
+                $this->load->view('templates/topbar', $data);
+                $this->load->view('user/disposisi', $data);
+                $this->load->view('templates/footer');
+            } else {
+                $data = [
+                    'surat_dari' => $this->input->post('surat_dari'),
+                    'no_surat' => $this->input->post('no_surat'),
+                    'tgl_surat' => $this->input->post('tgl_surat'),
+                    'tgl_terima' => $this->input->post('tgl_terima'),
+                    'sifat' => $this->input->post('sifat'),
+                    'asal' => $this->input->post('asal'),
+                    'perihal' => $this->input->post('perihal'),
+                    'teruskan' => $this->input->post('teruskan'),
+                ];
+                
+                $this->db->insert('disposisi', $data);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New menu added!</div>');
+                redirect('user/disposisi');
+            }
+        }
 
     public function changePassword()
     {
@@ -184,3 +225,4 @@ class User extends CI_Controller
         }
     }
 }
+?>
