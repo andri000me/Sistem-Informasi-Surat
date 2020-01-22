@@ -41,8 +41,8 @@
                         <td><?= $sm['perihal']; ?></td>
                         <td><?= $sm['lokasi']; ?></td>
                         <td>
-                            <a href="" class="badge badge-success">edit</a>
-                            <a href="" class="badge badge-danger">delete</a>
+                            <a href="" class="badge badge-success" data-toggle="modal" data-target="#updateModal">Update</a>
+                            <a href="<?php echo base_url().'user/deleteSurat/'.$sm['id']; ?>" class="badge badge-danger">Delete</a>
                         </td>
                     </tr>
                     <?php $i++; ?>
@@ -95,6 +95,44 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 
+
+
+<!-- Modal Update -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Update Surat Keluar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('user/updatesuratkeluar'); ?>" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="no_surat" name="no_surat" placeholder="Nomor Surat">
+                    </div>
+                    <div class="form-group">
+                        <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal Surat">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="tujuan" name="tujuan" placeholder="Tujuan Pengiriman">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="perihal" name="perihal" placeholder="Perihal">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Lokasi Arsip">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>

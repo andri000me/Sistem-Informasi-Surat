@@ -10,4 +10,12 @@ class Masuk_model extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    public function deleteSuratMasuk($suratId)
+    {
+        $this->db->where('id', $suratId);
+        $query = $this->db->delete('surat_masuk');
+
+        return $query;
+    }
+
 }

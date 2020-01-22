@@ -7,6 +7,8 @@ class User extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        $this->load->model('keluar_model');
+        $this->load->model('masuk_model');
     }
 
     public function index()
@@ -56,6 +58,45 @@ class User extends CI_Controller
         }
     }
 
+    public function updatesuratkeluar()
+    {
+        $data['title'] = 'Surat Keluar';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('keluar_model', 'menu');
+
+        $data['subMenu'] = $this->menu->getSubMenu();
+        $data['menu'] = $this->db->get('surat_keluar')->result_array();
+
+        $this->form_validation->set_rules('no_surat', 'no_surat', 'required|trim');
+        $this->form_validation->set_rules('tanggal', 'tanggal', 'required|trim');
+        $this->form_validation->set_rules('tujuan', 'tujuan', 'required|trim');
+        $this->form_validation->set_rules('perihal', 'perihal', 'required|trim');
+        $this->form_validation->set_rules('lokasi', 'lokasi', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('user/updatesuratkeluar', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'no_surat' => $this->input->post('no_surat'),
+                'tanggal' => $this->input->post('tanggal'),
+                'tujuan' => $this->input->post('tujuan'),
+                'perihal' => $this->input->post('perihal'),
+                'lokasi' => $this->input->post('lokasi')
+            ];
+            $this->db->set('no_surat', $data);
+            $this->db->set('tanggal', $data);
+            $this->db->set('tujuan', $data);
+            $this->db->set('perihal', $data);
+            $this->db->set('lokasi', $data);
+            $this->db->update('surat_keluar', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Surat berhasil diupdate</div>');
+            redirect('user/suratkeluar');
+        }
+    }
 
     public function suratmasuk()
     {
@@ -89,6 +130,49 @@ class User extends CI_Controller
                 'perihal' => $this->input->post('perihal'),
             ];
             $this->db->insert('surat_masuk', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New menu added!</div>');
+            redirect('user/suratmasuk');
+        }
+    }
+
+    public function updatesuratmasuk()
+    {
+        $data['title'] = 'Update Surat Masuk';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $this->load->model('masuk_model', 'menu');
+
+        $data['subMenu'] = $this->menu->getSubMenu();
+        $data['menu'] = $this->db->get('surat_masuk')->result_array();
+
+        $this->form_validation->set_rules('no_surat', 'no_surat', 'required');
+        $this->form_validation->set_rules('tgl_surat', 'tgl_surat', 'required');
+        $this->form_validation->set_rules('tgl_terima', 'tgl_terima', 'required');
+        $this->form_validation->set_rules('asal', 'asal', 'required');
+        $this->form_validation->set_rules('sifat', 'sifat', 'required');
+        $this->form_validation->set_rules('perihal', 'perihal', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('user/suratmasuk', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'no_surat' => $this->input->post('no_surat'),
+                'tgl_surat' => $this->input->post('tgl_surat'),
+                'tgl_terima' => $this->input->post('tgl_terima'),
+                'asal' => $this->input->post('asal'),
+                'sifat' => $this->input->post('sifat'),
+                'perihal' => $this->input->post('perihal'),
+            ];
+            $this->db->set('no_surat', $data);
+            $this->db->set('tgl_surat', $data);
+            $this->db->set('tgl_terima', $data);
+            $this->db->set('asal', $data);
+            $this->db->set('sifat', $data);
+            $this->db->set('perihal', $data);
+            $this->db->update('surat_masuk', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New menu added!</div>');
             redirect('user/suratmasuk');
         }
@@ -224,5 +308,18 @@ class User extends CI_Controller
             }
         }
     }
+
+    public function deleteSurat($idsurat)
+    {           
+        $result = $this->keluar_model->deleteSurat($idsurat);
+        redirect('user/suratkeluar');
+    }
+    
+    public function deleteSuratMasuk($idsurat)
+    {           
+        $result = $this->masuk_model->deleteSuratMasuk($idsurat);
+        redirect('user/suratmasuk');
+    }
+
 }
 ?>

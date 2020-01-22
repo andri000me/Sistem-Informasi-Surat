@@ -5,7 +5,6 @@
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
 
-
     <div class="row">
         <div class="col-lg">
             <?php if (validation_errors()) : ?>
@@ -44,9 +43,8 @@
                         <td><?= $sm['perihal']; ?></td>
 
                         <td>
-                            <a href="" class="badge badge-success">edit</a>
-                            <a href="" class="badge badge-danger">delete</a>
-                            <a href="/user/disposisi.php" class="badge badge-dark">disposisi</a>
+                            <a href="" class="badge badge-success" data-toggle="modal" data-target="#updateModal">Update</a>
+                            <a href="<?php echo base_url().'user/deleteSuratMasuk/'.$sm['id']; ?>" class="badge badge-danger">Delete</a>
                         </td>
                     </tr>
                     <?php $i++; ?>
@@ -98,13 +96,52 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="perihal" name="perihal" placeholder="Perihal">
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="disposisi" name="disposisi" placeholder="Disposisi">
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 
+
+
+
+<!-- Modal Update -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Update Surat Masuk</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('user/updatesuratmasuk'); ?>" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="no_surat" name="no_surat" placeholder="Nomor Surat">
+                    </div>
+                    <div class="form-group">
+                        <input type="date" class="form-control" id="tgl_surat" name="tgl_surat" placeholder="Tanggal Surat">
+                    </div>
+                    <div class="form-group">
+                        <input type="date" class="form-control" id="tgl_terima" name="tgl_terima" placeholder="Tanggal Surat Diterima">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="asal" name="asal" placeholder="Asal Surat">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="sifat" name="sifat" placeholder="Sifat Surat">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="perihal" name="perihal" placeholder="Perihal">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
